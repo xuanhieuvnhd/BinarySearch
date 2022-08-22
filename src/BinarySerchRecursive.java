@@ -1,28 +1,31 @@
 public class BinarySerchRecursive {
-    static int[] list = {2, 4, 7, 10, 11, 45, 50, 59, 60, 66, 69, 70, 79};
-
-    static int binarySearch(int[] list, int key) {
-        int low = 0;
-        int high = list.length - 1;
-        int mid = (low + high) / 2;
-        if (high >= low) {
-            if (list[mid] == key) {
+    //Trả về giá trị của x nếu nó có trong mảng arr cho trc
+    int binarySearch(int arr[], int l, int r, int x) {
+        if (r >= l) {
+            int mid = l + (r - l) / 2;
+            //Nếu giá trị cần tìm bằng mid thì trả về chính nó
+            if (arr[mid] == x)
                 return mid;
-            } else if (list[mid] > key) {
-                return binarySearch(list, low);
-            } else if (list[mid] < key) {
-                return binarySearch(list, high);
-            }
+            //Nếu giá trị cần tìm nhỏ hơn mid thì nó nằm ở mảng bên trái
+            if (arr[mid] > x)
+                return binarySearch(arr, l, mid - 1, x);
+                //Còn lại nó sẽ làm ở mảng bên phải
+            else return binarySearch(arr, mid + 1, r, x);
         }
+        //trường hợp giá trị cần tìm không thuộc mảng cho trc
         return -1;
     }
 
-    public static void main(String[] args) {
-        System.out.println(binarySearch(list, 2));  /* 0 */
-        System.out.println(binarySearch(list, 11)); /* 4 */
-        System.out.println(binarySearch(list, 79)); /*12 */
-        System.out.println(binarySearch(list, 1));  /*-1 */
-        System.out.println(binarySearch(list, 5));  /*-1 */
-        System.out.println(binarySearch(list, 80)); /*-1 */
+    public static void main(String args[]) {
+        BinarySerchRecursive ob = new BinarySerchRecursive();
+        int arr[] = {2, 3, 4, 10, 40};
+        int n = arr.length;
+        int x = 4;
+        int result = ob.binarySearch(arr, 0, n - 1, x);
+        if (result == -1)
+            System.out.println("Phan tu khong ton tai trong mang");
+        else
+            System.out.println("Phan tu duoc tim thay tai vi tri "
+                    + result);
     }
 }
